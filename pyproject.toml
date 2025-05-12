@@ -1,0 +1,72 @@
+[project]
+name = "uvlearn"
+version = "0.1.0"
+description = "Aprendendo a usar o uv"
+readme = "README.md"
+authors = [
+    { name = "Felipe Bastos Nunes", email = "felipebastos@ifce.edu.br" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "django>=5.2.1",
+    "django-filter>=25.1",
+    "djangorestframework>=3.16.0",
+    "djangorestframework-simplejwt>=5.5.0",
+    "djoser>=2.3.1",
+    "markdown>=3.8",
+    "python-dotenv>=1.1.0",
+]
+
+[project.scripts]
+uvlearn = "uvlearn:main"
+
+[tool.taskipy.tasks]
+dev = { cmd = "python src/manage.py runserver", help = "Runs dev mode." }
+qos = { cmd = "ruff check --fix & ruff format", help = "Checks QoS." }
+audit = { cmd = 'pip-audit', help = 'Verifica falhas de segurança das dependências do projeto' }
+makemigrations = { cmd = 'python src/manage.py makemigrations', help = 'Atualiza as migrações.' }
+migrate = { cmd = 'python src/manage.py migrate', help = 'Aplica as migrações.' }
+onboard = { cmd = 'pre-commit install', help = 'Instala os hooks de pre-commit' }
+secure = { cmd = 'bandit -r src', help = 'Gera relatório de falhas de segurança no código.' }
+test = { cmd = 'python src/manage.py test', help = 'Executa os testes' }
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.format]
+quote-style = "single"
+docstring-code-format = true
+
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "bandit>=1.8.3",
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.6.13",
+    "mkdocstrings>=0.29.1",
+    "pip-audit>=2.9.0",
+    "pre-commit>=4.2.0",
+    "prospector>=1.16.1",
+    "ruff>=0.11.9",
+    "taskipy>=1.14.1",
+]
