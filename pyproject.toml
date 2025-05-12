@@ -13,6 +13,7 @@ dependencies = [
     "djangorestframework>=3.16.0",
     "djangorestframework-simplejwt>=5.5.0",
     "djoser>=2.3.1",
+    "gunicorn>=23.0.0",
     "markdown>=3.8",
     "python-dotenv>=1.1.0",
 ]
@@ -22,6 +23,7 @@ uvlearn = "uvlearn:main"
 
 [tool.taskipy.tasks]
 dev = { cmd = "python src/manage.py runserver", help = "Runs dev mode." }
+prod = { cmd = "gunicorn -w 4 core.wsgi:application", help = "Runs production mode." }
 qos = { cmd = "ruff check --fix & ruff format", help = "Checks QoS." }
 audit = { cmd = 'pip-audit', help = 'Verifica falhas de segurança das dependências do projeto' }
 makemigrations = { cmd = 'python src/manage.py makemigrations', help = 'Atualiza as migrações.' }
@@ -48,6 +50,7 @@ select = [
 
 [tool.ruff]
 line-length = 88
+exclude = ['migrations']
 
 [tool.ruff.format]
 quote-style = "single"
